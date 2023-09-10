@@ -3,7 +3,7 @@ mod macros;
 
 mod generated;
 
-#[cfg(feature = "std")]
+#[cfg(all(feature = "std", not(all(feature = "wine", target_os = "windows"))))]
 mod last;
 
 use core::fmt;
@@ -46,13 +46,19 @@ impl Errno {
     }
 
     /// Returns the last error that occurred.
-    #[cfg(feature = "std")]
+    #[cfg(all(
+        feature = "std",
+        not(all(feature = "wine", target_os = "windows"))
+    ))]
     pub fn last() -> Self {
         Self(unsafe { *last::errno() })
     }
 
     /// Converts a value into an `Errno`.
-    #[cfg(feature = "std")]
+    #[cfg(all(
+        feature = "std",
+        not(all(feature = "wine", target_os = "windows"))
+    ))]
     pub fn result<T>(value: T) -> Result<T, Errno>
     where
         T: ErrnoSentinel + PartialEq<T>,
@@ -207,7 +213,10 @@ mod test {
         );
     }
 
-    #[cfg(feature = "std")]
+    #[cfg(all(
+        feature = "std",
+        not(all(feature = "wine", target_os = "windows"))
+    ))]
     #[test]
     fn last_errno() {
         assert_eq!(
