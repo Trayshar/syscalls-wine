@@ -22,6 +22,9 @@ full = ["std", "serde", "all"]
 # Enables usage of libstd.
 std = []
 
+# Disables some target_os checks to build for windows
+wine = []
+
 # Includes the syscall tables for all architectures.
 all = [
     "aarch64", "arm", "mips", "mips64", "powerpc", "powerpc64", "riscv32",

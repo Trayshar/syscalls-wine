@@ -2,7 +2,11 @@
     target_os = "linux",
     target_os = "redox",
     target_os = "dragonfly",
-    target_os = "fuchsia"
+    target_os = "fuchsia",
+    all(
+        target_os = "windows",
+        feature = "wine"
+    )
 ))]
 mod ffi {
     extern "C" {
